@@ -27,9 +27,9 @@ Access: Public (for review purposes)
 
 **Project Details:**
 ```
-Project Name: mcp-demo-sandbox
-Project ID: prj_demo_sandbox_12345
-URL: https://mcp-demo-sandbox.vercel.app
+Project Name: mcp-demo
+Project ID: prj_YQbqYnzMJpX1QjXeRketjVfk3gfA
+URL: mcp-demo-git-main-autonomy-ai.vercel.app
 Environment: Preview/Development
 ```
 
@@ -82,14 +82,14 @@ mcp-demo/
 
 ### Health Check
 ```bash
-GET https://mcp-demo-sandbox.vercel.app/api/health
+GET https://mcp-demo-pi.vercel.app/api/health]
 ```
 
 **Response:**
 ```json
 {
   "status": "ok",
-  "service": "mcp-demo",
+  "service": "mcp-demo-sandbox",
   "timestamp": "2025-10-28T10:00:00Z"
 }
 ```
@@ -98,17 +98,17 @@ GET https://mcp-demo-sandbox.vercel.app/api/health
 
 #### Get Users
 ```bash
-GET https://mcp-demo-sandbox.vercel.app/api/data/users
+GET https://mcp-demo-pi.vercel.app/api/data/users
 ```
 
 #### Get Projects
 ```bash
-GET https://mcp-demo-sandbox.vercel.app/api/data/projects
+GET https://mcp-demo-pi.vercel.app/api/data/projects
 ```
 
 #### Get Metrics
 ```bash
-GET https://mcp-demo-sandbox.vercel.app/api/data/metrics
+GET https://mcp-demo-pi.vercel.app/api/data/metrics
 ```
 
 ## Environment Variables
@@ -118,7 +118,7 @@ Copy `.env.example` to `.env.local`:
 ```bash
 # Application
 NEXT_PUBLIC_APP_NAME=MCP Demo
-NEXT_PUBLIC_APP_URL=https://mcp-demo-sandbox.vercel.app
+NEXT_PUBLIC_APP_URL=https://mcp-demo-pi.vercel.app/
 
 # Mock Services (non-functional, for testing only)
 MOCK_API_KEY=demo_key_12345
@@ -135,10 +135,10 @@ ENABLE_RATE_LIMITING=false
 ### 1. GitHub Integration
 ```bash
 # Test repository access
-gh repo view autonomy/mcp-demo
+gh repo view Bmathews/mcp-demo
 
 # List files
-gh api repos/autonomy/mcp-demo/contents
+gh api repos/Bmathews/mcp-demo/contents
 ```
 
 ### 2. Vercel Integration
@@ -147,7 +147,7 @@ gh api repos/autonomy/mcp-demo/contents
 vercel project ls
 
 # Get deployments
-vercel list mcp-demo-sandbox
+vercel list mcp-demo
 ```
 
 ### 3. Google Drive Integration
@@ -182,7 +182,7 @@ See `docs/CREDENTIALS.md` for full access details.
 ## Support
 
 For questions or issues with the sandbox:
-- Open an issue: `github.com/autonomy/mcp-demo/issues`
+- Open an issue: `github.com/Bmathews721/mcp-demo/issues`
 - Contact: sandbox-support@auai.cloud
 
 ## License
