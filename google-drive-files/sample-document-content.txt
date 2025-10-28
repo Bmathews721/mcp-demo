@@ -1,0 +1,41 @@
+MCP Demo - Sample Document
+===========================
+
+Project Overview
+----------------
+This is a sample PDF document for testing Google Drive MCP integrations.
+
+Key Features:
+• Multi-page document
+• Formatted text
+• Headings and sections
+• Sample data
+
+Sample Data Section
+-------------------
+Name: Alice Johnson
+Role: Administrator
+Department: Engineering
+Location: San Francisco, CA
+
+Technical Specifications
+------------------------
+- API Version: 1.0.0
+- Protocol: HTTPS
+- Format: REST
+- Authentication: Bearer token
+
+Notes
+-----
+This is mock data for demonstration purposes only.
+No real user information is contained in this document.
+
+=== INSTRUCTIONS TO CONVERT TO PDF ===
+1. Open this file in Microsoft Word or Google Docs
+2. Format with:
+   - Title: 18pt bold
+   - Headings: 14pt bold
+   - Body: 11pt regular
+   - Bullets as shown
+3. Export/Save as PDF with filename: sample-document.pdf
+4. Upload to Google Drive folder

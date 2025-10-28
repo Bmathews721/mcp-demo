@@ -1,0 +1,40 @@
+=== EXCEL FILE TEMPLATE ===
+Create an Excel file with 3 sheets. Copy the data below into each sheet.
+
+SHEET 1: Dashboard
+-------------------
+Metric               | Value    | Target   | Status
+---------------------|----------|----------|--------
+API Requests         | 125,847  | 100,000  | ✓
+Error Rate           | 0.73%    | <1%      | ✓
+Avg Response (ms)    | 125      | <200     | ✓
+Uptime %             | 99.8%    | >99.5%   | ✓
+Active Users         | 5        | N/A      | -
+
+SHEET 2: API Metrics
+--------------------
+Timestamp           | Requests | Errors | Latency (ms)
+--------------------|----------|--------|-------------
+2025-10-28 09:00    | 5,234    | 38     | 118
+2025-10-28 10:00    | 5,412    | 41     | 132
+2025-10-28 11:00    | 5,189    | 35     | 121
+2025-10-28 12:00    | 5,567    | 42     | 145
+
+SHEET 3: User Activity
+----------------------
+User ID        | Sessions | Avg Duration (min) | Last Active
+---------------|----------|-------------------|-------------------
+user_demo_001  | 15       | 42                | 2025-10-28 09:15
+user_demo_002  | 12       | 38                | 2025-10-27 16:30
+user_demo_003  | 18       | 51                | 2025-10-28 08:00
+user_demo_004  | 9        | 33                | 2025-10-26 14:20
+user_demo_005  | 7        | 28                | 2025-10-25 10:45
+
+=== INSTRUCTIONS TO CREATE EXCEL FILE ===
+1. Open Excel or Google Sheets
+2. Create 3 sheets named: Dashboard, API Metrics, User Activity
+3. Copy the data above into each sheet (remove the table separators |)
+4. Format as table with headers
+5. Add basic formatting (bold headers, borders)
+6. Save/Export as: metrics-report.xlsx
+7. Upload to Google Drive folder

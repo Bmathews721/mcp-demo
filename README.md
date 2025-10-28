@@ -153,7 +153,7 @@ vercel list mcp-demo-sandbox
 ### 3. Google Drive Integration
 ```
 Folder: MCP Demo - Sandbox Data
-URL: https://drive.google.com/drive/folders/[FOLDER_ID]
+URL: https://drive.google.com/drive/folders/1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
 Contains:
 - sample-document.pdf
 - metrics-report.xlsx

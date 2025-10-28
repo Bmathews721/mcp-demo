@@ -103,8 +103,8 @@ vercel logs [deployment-url]
 ### Folder Details
 ```
 Folder Name: MCP Demo - Sandbox Data
-Folder ID: [To be created - insert actual ID here]
-URL: https://drive.google.com/drive/folders/[FOLDER_ID]
+Folder ID: 1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
+URL: https://drive.google.com/drive/folders/1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
 Access: View-only (shared link)
 ```
 
@@ -139,7 +139,7 @@ Access: View-only (shared link)
 
 **Via Browser:**
 ```
-1. Open: https://drive.google.com/drive/folders/[FOLDER_ID]
+1. Open: https://drive.google.com/drive/folders/1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
 2. Files are viewable without login (public link)
 3. Download available for all files
 ```
@@ -147,7 +147,7 @@ Access: View-only (shared link)
 **Via Google Drive API (for MCP testing):**
 ```bash
 # List files in folder (requires API key)
-curl "https://www.googleapis.com/drive/v3/files?q='[FOLDER_ID]'+in+parents&key=[API_KEY]"
+curl "https://www.googleapis.com/drive/v3/files?q='1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3'+in+parents&key=[API_KEY]"
 
 # Get file metadata
 curl "https://www.googleapis.com/drive/v3/files/[FILE_ID]?key=[API_KEY]"

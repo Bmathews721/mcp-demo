@@ -1,0 +1,11 @@
+id,name,email,role,department,location,created_at,status
+user_demo_001,Alice Johnson,alice.johnson@demo.example.com,admin,Engineering,"San Francisco, CA",2024-01-15T10:30:00Z,active
+user_demo_002,Bob Smith,bob.smith@demo.example.com,developer,Engineering,"New York, NY",2024-02-20T14:45:00Z,active
+user_demo_003,Carol Williams,carol.williams@demo.example.com,reviewer,"Quality Assurance","Austin, TX",2024-03-10T08:20:00Z,active
+user_demo_004,David Chen,david.chen@demo.example.com,developer,Engineering,"Seattle, WA",2024-04-05T11:10:00Z,active
+user_demo_005,Eva Martinez,eva.martinez@demo.example.com,viewer,Product,Remote,2024-05-12T09:00:00Z,active
+user_demo_006,Frank Wilson,frank.wilson@demo.example.com,developer,Engineering,"Boston, MA",2024-06-18T13:25:00Z,active
+user_demo_007,Grace Lee,grace.lee@demo.example.com,admin,Operations,"Chicago, IL",2024-07-22T11:40:00Z,active
+user_demo_008,Henry Brown,henry.brown@demo.example.com,reviewer,"Quality Assurance","Portland, OR",2024-08-30T09:15:00Z,active
+user_demo_009,Irene Davis,irene.davis@demo.example.com,developer,Engineering,"Denver, CO",2024-09-14T14:50:00Z,active
+user_demo_010,Jack Miller,jack.miller@demo.example.com,viewer,Product,"Los Angeles, CA",2024-10-05T10:20:00Z,active
