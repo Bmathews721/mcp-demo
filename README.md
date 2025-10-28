@@ -5,7 +5,7 @@ This is a demo repository for testing MCP (Model Context Protocol) integrations.
 ## Overview
 
 This demo includes:
-- Test GitHub repository (`autonomy/mcp-demo`)
+- Test GitHub repository (`Bmathews721/mcp-demo`)
 - Dummy Vercel project configuration
 - Mock data files simulating production data
 - Sample Next.js application for testing
@@ -14,12 +14,12 @@ This demo includes:
 
 ### 1. GitHub Repository
 
-This repository is set up at: `github.com/autonomy/mcp-demo`
+This repository is set up at: `github.com/Bmathews721/mcp-demo`
 
 **Test Credentials:**
 ```
 Repository: autonomy/mcp-demo
-Clone URL: git@github.com:autonomy/mcp-demo.git
+Clone URL: git@github.com:Bmathews/mcp-demo.git
 Access: Public (for review purposes)
 ```
 
