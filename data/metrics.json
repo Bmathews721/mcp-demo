@@ -1,0 +1,92 @@
+{
+  "metrics": {
+    "api_performance": {
+      "total_requests": 125847,
+      "successful_requests": 124932,
+      "failed_requests": 915,
+      "error_rate": 0.73,
+      "avg_response_time_ms": 125,
+      "p50_response_time_ms": 95,
+      "p95_response_time_ms": 320,
+      "p99_response_time_ms": 850,
+      "period": "last_24_hours",
+      "timestamp": "2025-10-28T10:00:00Z"
+    },
+    "user_activity": {
+      "total_users": 5,
+      "active_users_today": 4,
+      "active_users_week": 5,
+      "new_users_month": 0,
+      "avg_session_duration_minutes": 45,
+      "total_sessions_today": 12,
+      "timestamp": "2025-10-28T10:00:00Z"
+    },
+    "deployment_stats": {
+      "total_deployments": 105,
+      "successful_deployments": 102,
+      "failed_deployments": 3,
+      "success_rate": 97.1,
+      "avg_deployment_time_minutes": 3.2,
+      "deployments_this_week": 8,
+      "timestamp": "2025-10-28T10:00:00Z"
+    },
+    "resource_usage": {
+      "cpu_usage_percent": 35.2,
+      "memory_usage_percent": 62.8,
+      "disk_usage_percent": 45.1,
+      "network_in_mbps": 12.5,
+      "network_out_mbps": 8.3,
+      "active_connections": 47,
+      "timestamp": "2025-10-28T10:00:00Z"
+    },
+    "error_tracking": {
+      "total_errors": 915,
+      "critical_errors": 3,
+      "warnings": 142,
+      "info_messages": 770,
+      "top_error_types": [
+        {
+          "type": "ValidationError",
+          "count": 452,
+          "percentage": 49.4
+        },
+        {
+          "type": "TimeoutError",
+          "count": 231,
+          "percentage": 25.2
+        },
+        {
+          "type": "AuthenticationError",
+          "count": 156,
+          "percentage": 17.0
+        },
+        {
+          "type": "DatabaseError",
+          "count": 76,
+          "percentage": 8.3
+        }
+      ],
+      "timestamp": "2025-10-28T10:00:00Z"
+    },
+    "sandbox_health": {
+      "status": "healthy",
+      "uptime_hours": 720,
+      "last_restart": "2025-09-28T10:00:00Z",
+      "health_checks_passed": 8640,
+      "health_checks_failed": 2,
+      "services": {
+        "api": "operational",
+        "database": "operational",
+        "cache": "operational",
+        "storage": "operational"
+      },
+      "timestamp": "2025-10-28T10:00:00Z"
+    }
+  },
+  "metadata": {
+    "collection_period": "2025-10-27T10:00:00Z to 2025-10-28T10:00:00Z",
+    "data_points": 1440,
+    "aggregation": "hourly",
+    "last_updated": "2025-10-28T10:00:00Z"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "mcp-demo-sandbox",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "NEXT_PUBLIC_APP_NAME": "MCP Demo",
+    "ENABLE_MOCK_AUTH": "true"
+  },
+  "regions": ["iad1"],
+  "github": {
+    "enabled": true,
+    "autoAlias": true
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "users": [
+    {
+      "id": "user_demo_001",
+      "name": "Alice Johnson",
+      "email": "alice.johnson@demo.example.com",
+      "role": "admin",
+      "created_at": "2024-01-15T10:30:00Z",
+      "last_login": "2025-10-28T09:15:00Z",
+      "status": "active",
+      "metadata": {
+        "department": "Engineering",
+        "location": "San Francisco, CA"
+      }
+    },
+    {
+      "id": "user_demo_002",
+      "name": "Bob Smith",
+      "email": "bob.smith@demo.example.com",
+      "role": "developer",
+      "created_at": "2024-02-20T14:45:00Z",
+      "last_login": "2025-10-27T16:30:00Z",
+      "status": "active",
+      "metadata": {
+        "department": "Engineering",
+        "location": "New York, NY"
+      }
+    },
+    {
+      "id": "user_demo_003",
+      "name": "Carol Williams",
+      "email": "carol.williams@demo.example.com",
+      "role": "reviewer",
+      "created_at": "2024-03-10T08:20:00Z",
+      "last_login": "2025-10-28T08:00:00Z",
+      "status": "active",
+      "metadata": {
+        "department": "Quality Assurance",
+        "location": "Austin, TX"
+      }
+    },
+    {
+      "id": "user_demo_004",
+      "name": "David Chen",
+      "email": "david.chen@demo.example.com",
+      "role": "developer",
+      "created_at": "2024-04-05T11:10:00Z",
+      "last_login": "2025-10-26T14:20:00Z",
+      "status": "active",
+      "metadata": {
+        "department": "Engineering",
+        "location": "Seattle, WA"
+      }
+    },
+    {
+      "id": "user_demo_005",
+      "name": "Eva Martinez",
+      "email": "eva.martinez@demo.example.com",
+      "role": "viewer",
+      "created_at": "2024-05-12T09:00:00Z",
+      "last_login": "2025-10-25T10:45:00Z",
+      "status": "active",
+      "metadata": {
+        "department": "Product",
+        "location": "Remote"
+      }
+    }
+  ],
+  "metadata": {
+    "total_count": 5,
+    "active_count": 5,
+    "last_updated": "2025-10-28T10:00:00Z"
+  }
+}
