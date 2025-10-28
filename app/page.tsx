@@ -106,8 +106,8 @@ export default function Home() {
           <ul style={{ lineHeight: '1.8' }}>
             <li>
               <strong>GitHub:</strong>{' '}
-              <a href="https://github.com/autonomy/mcp-demo" target="_blank" rel="noopener noreferrer">
-                autonomy/mcp-demo
+              <a href="https://github.com/Bmathews721/mcp-demo" target="_blank" rel="noopener noreferrer">
+                Bmathews721/mcp-demo
               </a>
             </li>
             <li>
