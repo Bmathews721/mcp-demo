@@ -1,386 +1,354 @@
-# Sandbox Credentials - For Anthropic Reviewers
+# MCP Server Credentials Guide
 
-This document contains all sandbox credentials and access information for testing the MCP Demo environment.
+This document explains how to obtain and configure credentials for the Autonomy MCP Server demo.
 
 ## ⚠️ Important Notice
 
-**All credentials in this document are for SANDBOX/DEMO purposes only.**
+**This guide covers setting up credentials for the 3 MCP integrations:**
+- GitHub (code review tools)
+- Vercel (deployment status tools)
+- Google Drive (document access tools)
 
-- These credentials do not provide access to any real systems
-- All data is mock/synthetic
-- Safe for testing and demonstration
-- Do not use these patterns in production environments
+All credentials are used **read-only** by the MCP server. No write operations are supported.
 
 ---
 
-## GitHub Access
+## GitHub Credentials
 
-### Repository
-```
-Repository Name: mcp-demo
-Organization: autonomy
-Full Path: autonomy/mcp-demo
-URL: https://github.com/autonomy/mcp-demo
-```
+The GitHub integration enables AI-powered code review and PR management.
 
-### Access
+### Required Tools
+- `autonomy/review_pr` - Fetch PR details with diff and files
+- `autonomy/list_prs` - List all PRs in a repository
+
+### Creating a Personal Access Token
+
+**Step 1: Navigate to GitHub Settings**
 ```
-Type: Public Repository
-Authentication: Not required for read access
-Clone URL (HTTPS): https://github.com/autonomy/mcp-demo.git
-Clone URL (SSH): git@github.com:autonomy/mcp-demo.git
+https://github.com/settings/tokens/new
 ```
 
-### Testing GitHub MCP Integration
+**Step 2: Configure Token**
+- **Note**: `Autonomy MCP Server - Read Only`
+- **Expiration**: 90 days (recommended) or custom
+- **Scopes**:
+  - ✅ `repo` (Full control of private repositories)
+    - Or `public_repo` if you only need access to public repos
+  - ✅ `read:org` (Read org and team membership, read org projects)
+
+**Step 3: Generate and Copy Token**
 ```bash
-# View repository
-gh repo view autonomy/mcp-demo
-
-# List files
-gh api repos/autonomy/mcp-demo/contents
-
-# Get repository info
-gh api repos/autonomy/mcp-demo
-
-# List commits
-gh api repos/autonomy/mcp-demo/commits
+# Token format: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+
+**Step 4: Add to Environment**
+```bash
+# In mcp-demo/.env.local
+GITHUB_TOKEN=ghp_your_actual_token_here
+```
+
+### Testing GitHub Integration
+```bash
+# Using GitHub CLI
+gh auth status
+
+# Test API access
+curl -H "Authorization: Bearer $GITHUB_TOKEN" \
+  https://api.github.com/repos/Bmathews721/autonomy/pulls
+
+# Expected: 200 OK with PR list
+```
+
+### Security Best Practices
+- ✅ Use fine-grained tokens when available (beta)
+- ✅ Set shortest expiration that works for your workflow
+- ✅ Rotate tokens every 90 days
+- ✅ Never commit tokens to git
+- ❌ Don't share tokens in screenshots or logs
 
 ---
 
-## Vercel Project
+## Vercel Credentials
 
-### Project Details
+The Vercel integration provides deployment status and build logs.
+
+### Required Tools
+- `autonomy/deploy_status` - List deployments for a project
+- `autonomy/get_deployment` - Get detailed deployment info and logs
+
+### Creating an API Token
+
+**Step 1: Navigate to Vercel Tokens Page**
 ```
-Project Name: mcp-demo-sandbox
-Project ID: prj_demo_sandbox_12345
-Organization: autonomy-demo
+https://vercel.com/account/tokens
 ```
 
-### URLs
-```
-Production: https://mcp-demo-sandbox.vercel.app
-Preview: https://mcp-demo-sandbox-[hash].vercel.app
-Development: http://localhost:3000
+**Step 2: Create New Token**
+- **Token Name**: `Autonomy MCP Server`
+- **Scope**:
+  - ✅ Full Account (for accessing all projects)
+  - Or select specific projects if preferred
+- **Expiration**: Custom (365 days recommended)
+
+**Step 3: Copy Token**
+```bash
+# Token format: [random_string]
+# Example: xqwYT9k3L8mNpRs4V7WzAbCdEfGh
 ```
 
-### Mock Environment Variables
+**Step 4: Add to Environment**
+```bash
+# In mcp-demo/.env.local
+VERCEL_API_TOKEN=your_actual_vercel_token_here
+```
+
+### Testing Vercel Integration
+```bash
+# Install Vercel CLI (optional)
+npm i -g vercel
+
+# Test API access
+curl -H "Authorization: Bearer $VERCEL_API_TOKEN" \
+  https://api.vercel.com/v9/projects
+
+# Expected: 200 OK with project list
+```
+
+### Finding Your Project ID
+```bash
+# List all projects
+curl -H "Authorization: Bearer $VERCEL_API_TOKEN" \
+  https://api.vercel.com/v9/projects | jq '.projects[] | {name, id}'
+
+# Portal project: prj_4ECQyyM40VApek2Vg6y8dse22kCI
+# PricePulse project: prj_a4r5XlTf40Z28VX9P69Cy0jVdUiK
+```
+
+### Security Best Practices
+- ✅ Use project-scoped tokens when possible
+- ✅ Set 365-day expiration and calendar reminder
+- ✅ Delete unused tokens immediately
+- ❌ Don't use in client-side code
+
+---
+
+## Google Drive Credentials
+
+The Google Drive integration enables AI to access and summarize documents.
+
+### Required Tools
+- `autonomy/report_summary` - Summarize a Drive document
+- `autonomy/get_file` - Get file metadata and content
+- `autonomy/list_files` - List files in a folder
+
+### Creating a Service Account
+
+For detailed step-by-step instructions, see **[GOOGLE_DRIVE_SETUP.md](./GOOGLE_DRIVE_SETUP.md)**.
+
+**Quick Setup Summary:**
+
+1. **Create GCP Project**
+   - Go to https://console.cloud.google.com/
+   - Create new project or select existing
+
+2. **Enable Google Drive API**
+   - Navigate to APIs & Services → Library
+   - Search "Google Drive API"
+   - Click Enable
+
+3. **Create Service Account**
+   - APIs & Services → Credentials
+   - Create Credentials → Service Account
+   - Name: `autonomy-mcp-server`
+   - Role: None (we'll grant folder access instead)
+
+4. **Generate Private Key**
+   - Click on service account
+   - Keys → Add Key → Create New Key
+   - Type: JSON
+   - Download JSON file
+
+5. **Extract Credentials**
+   ```bash
+   # From downloaded JSON
+   SERVICE_ACCOUNT_EMAIL="autonomy-mcp@your-project.iam.gserviceaccount.com"
+   PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+   ```
+
+6. **Share Folder with Service Account**
+   - Open Google Drive folder
+   - Right-click → Share
+   - Add service account email with "Viewer" access
+   - Copy folder ID from URL:
+     ```
+     https://drive.google.com/drive/folders/1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                             This is your FOLDER_ID
+     ```
+
+7. **Add to Environment**
+   ```bash
+   # In mcp-demo/.env.local
+   GOOGLE_SERVICE_ACCOUNT_EMAIL=autonomy-mcp@your-project.iam.gserviceaccount.com
+   GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour-Actual-Key\n-----END PRIVATE KEY-----\n"
+   GOOGLE_DRIVE_FOLDER_ID=1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
+   ```
+
+### Testing Google Drive Integration
+```bash
+# Using gcloud CLI (optional)
+gcloud auth activate-service-account \
+  --key-file=service-account-key.json
+
+# Test API access (requires API key or OAuth)
+curl "https://www.googleapis.com/drive/v3/files?q='$GOOGLE_DRIVE_FOLDER_ID'+in+parents"
+
+# Expected: 200 OK with file list
+```
+
+### Demo Folder Contents
+
+The Autonomy demo folder contains sample files for testing:
+
+```
+📁 MCP Demo - Sandbox Data
+├── 📄 sample-report.pdf (~2 MB)
+├── 📊 metrics-dashboard.xlsx (~500 KB)
+├── 📋 user-export.csv (~150 KB)
+├── 📝 api-logs.txt (~1 MB)
+└── 📄 README.txt (~5 KB)
+```
+
+**Folder ID**: `1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3`
+
+### Security Best Practices
+- ✅ Use service accounts (not user OAuth) for server-to-server
+- ✅ Grant minimum permissions (Viewer only)
+- ✅ Scope to specific folders, not entire Drive
+- ✅ Rotate service account keys annually
+- ❌ Don't share private keys in public repos
+
+---
+
+## Environment Variable Summary
+
+After obtaining all credentials, your `.env.local` should look like:
+
 ```bash
 # Application
 NEXT_PUBLIC_APP_NAME=MCP Demo
-NEXT_PUBLIC_APP_URL=https://mcp-demo-sandbox.vercel.app
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NODE_ENV=development
 
-# Mock Services (non-functional)
-MOCK_API_KEY=demo_key_12345abcdef
-MOCK_DATABASE_URL=postgresql://demo:demo@localhost:5432/demo_db
-MOCK_REDIS_URL=redis://localhost:6379/0
-MOCK_STRIPE_KEY=sk_test_demo_12345
-MOCK_TWILIO_SID=ACdemo12345
-MOCK_TWILIO_TOKEN=demo_token_12345
+# GitHub (for MCP code review tools)
+GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-# Feature Flags
-ENABLE_MOCK_AUTH=true
-ENABLE_RATE_LIMITING=false
-ENABLE_ANALYTICS=false
-```
+# Vercel (for MCP deployment tools)
+VERCEL_API_TOKEN=xqwYT9k3L8mNpRs4V7WzAbCdEfGh
 
-### Testing Vercel Deployment
-```bash
-# List deployments
-vercel list mcp-demo-sandbox
+# Google Drive (for MCP document tools)
+GOOGLE_SERVICE_ACCOUNT_EMAIL=autonomy-mcp@your-project.iam.gserviceaccount.com
+GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+GOOGLE_DRIVE_FOLDER_ID=1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
 
-# Get project info
-vercel project ls
-
-# View deployment logs (requires Vercel CLI authentication)
-vercel logs [deployment-url]
+# Vercel (auto-populated)
+VERCEL_URL=
+VERCEL_ENV=development
 ```
 
 ---
 
-## Google Drive
+## Credential Validation Checklist
 
-### Folder Details
-```
-Folder Name: MCP Demo - Sandbox Data
-Folder ID: 1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
-URL: https://drive.google.com/drive/folders/1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
-Access: View-only (shared link)
-```
+Before using the MCP server, verify all credentials:
 
-### Contents
-```
-📁 MCP Demo - Sandbox Data/
-├── 📄 sample-document.pdf
-│   Description: Sample PDF document with mock data
-│   Size: ~2 MB
-│
-├── 📊 metrics-report.xlsx
-│   Description: Sample Excel spreadsheet with metrics data
-│   Sheets: Dashboard, API Metrics, User Activity
-│   Size: ~500 KB
-│
-├── 📋 user-data-export.csv
-│   Description: CSV export of mock user data
-│   Rows: 1000+ (header + 1000 mock users)
-│   Size: ~150 KB
-│
-├── 📝 api-logs-sample.txt
-│   Description: Plain text log file
-│   Lines: 5000+ log entries
-│   Size: ~1 MB
-│
-└── 📄 README.txt
-    Description: Overview of folder contents
-    Size: ~5 KB
-```
-
-### Accessing Drive Files
-
-**Via Browser:**
-```
-1. Open: https://drive.google.com/drive/folders/1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
-2. Files are viewable without login (public link)
-3. Download available for all files
-```
-
-**Via Google Drive API (for MCP testing):**
+### GitHub ✅
 ```bash
-# List files in folder (requires API key)
-curl "https://www.googleapis.com/drive/v3/files?q='1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3'+in+parents&key=[API_KEY]"
+curl -H "Authorization: Bearer $GITHUB_TOKEN" \
+  https://api.github.com/user
+# Expected: 200 OK with your user info
+```
 
-# Get file metadata
-curl "https://www.googleapis.com/drive/v3/files/[FILE_ID]?key=[API_KEY]"
+### Vercel ✅
+```bash
+curl -H "Authorization: Bearer $VERCEL_API_TOKEN" \
+  https://api.vercel.com/v9/projects
+# Expected: 200 OK with project list
+```
 
-# Download file
-curl "https://www.googleapis.com/drive/v3/files/[FILE_ID]?alt=media&key=[API_KEY]" -o filename
+### Google Drive ✅
+```bash
+# Check service account email format
+echo $GOOGLE_SERVICE_ACCOUNT_EMAIL | grep "@.*\.iam\.gserviceaccount\.com"
+
+# Check private key format
+echo $GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY | grep "BEGIN PRIVATE KEY"
+
+# Check folder ID is 33 characters
+echo $GOOGLE_DRIVE_FOLDER_ID | grep -E '^.{33}$'
 ```
 
 ---
 
-## API Endpoints
+## Troubleshooting
 
-### Base URLs
-```
-Production: https://mcp-demo-sandbox.vercel.app
-Development: http://localhost:3000
-```
+### GitHub: 401 Unauthorized
+- **Cause**: Invalid or expired token
+- **Solution**: Regenerate token at https://github.com/settings/tokens
 
-### Available Endpoints
+### Vercel: 403 Forbidden
+- **Cause**: Token lacks scope for requested project
+- **Solution**: Create new token with Full Account scope
 
-#### Health Check
-```bash
-GET /api/health
+### Google Drive: 400 Invalid Credentials
+- **Cause**: Malformed private key (newlines not escaped)
+- **Solution**: Ensure key is wrapped in quotes with `\n` for newlines:
+  ```bash
+  GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nLine1\nLine2\n-----END PRIVATE KEY-----\n"
+  ```
 
-# Example
-curl https://mcp-demo-sandbox.vercel.app/api/health
-
-# Response
-{
-  "status": "ok",
-  "service": "mcp-demo-sandbox",
-  "timestamp": "2025-10-28T10:00:00Z",
-  "environment": "production",
-  "version": "0.1.0",
-  "checks": {
-    "api": "operational",
-    "database": "mock",
-    "cache": "mock"
-  }
-}
-```
-
-#### Mock Users API
-```bash
-GET /api/data/users
-
-# Example
-curl https://mcp-demo-sandbox.vercel.app/api/data/users
-
-# Returns: JSON array of 5 mock users with metadata
-```
-
-#### Mock Projects API
-```bash
-GET /api/data/projects
-
-# Example
-curl https://mcp-demo-sandbox.vercel.app/api/data/projects
-
-# Returns: JSON array of 5 mock projects with metrics
-```
-
-#### Mock Metrics API
-```bash
-GET /api/data/metrics
-
-# Example
-curl https://mcp-demo-sandbox.vercel.app/api/data/metrics
-
-# Returns: JSON object with various performance metrics
-```
-
-#### Mock Logs API
-```bash
-GET /api/data/logs
-
-# Example
-curl https://mcp-demo-sandbox.vercel.app/api/data/logs
-
-# Returns: JSON array of 10+ mock log entries
-```
+### Google Drive: 404 File Not Found
+- **Cause**: Service account doesn't have access to folder
+- **Solution**: Share folder with service account email (Viewer permission)
 
 ---
 
-## Mock Service Credentials
+## Security & Compliance
 
-### Mock Database
-```
-Type: PostgreSQL (simulated)
-Host: demo-db.example.com
-Port: 5432
-Database: demo_db
-Username: demo_user
-Password: demo_password_12345
-Connection String: postgresql://demo_user:demo_password_12345@demo-db.example.com:5432/demo_db
-```
+### Token Rotation Schedule
+| Service | Recommended Rotation | Maximum Age |
+|---------|---------------------|-------------|
+| GitHub PAT | 90 days | 365 days |
+| Vercel Token | 365 days | No limit |
+| Google Service Account | 365 days | No limit |
 
-### Mock Redis Cache
-```
-Type: Redis (simulated)
-Host: demo-cache.example.com
-Port: 6379
-Database: 0
-Password: demo_redis_pass_12345
-Connection String: redis://:demo_redis_pass_12345@demo-cache.example.com:6379/0
-```
+### Access Scope
+All MCP tools are **read-only**:
+- ✅ List resources (PRs, deployments, files)
+- ✅ Read content (diffs, logs, documents)
+- ❌ Create resources
+- ❌ Update resources
+- ❌ Delete resources
 
-### Mock Stripe
-```
-Test Mode: Enabled
-Publishable Key: pk_test_demo_12345abcdef
-Secret Key: sk_test_demo_12345abcdef
-Webhook Secret: whsec_demo_12345abcdef
-```
-
-### Mock Twilio
-```
-Account SID: ACdemo12345abcdef
-Auth Token: demo_twilio_token_12345
-Phone Number: +15551234567 (E.164 format)
-```
-
-### Mock Email (Resend)
-```
-API Key: re_demo_12345abcdef
-From Domain: demo.example.com
-From Address: noreply@demo.example.com
-```
+### Compliance Notes
+- **GDPR**: Service account may access EU user data if Drive folder contains it
+- **HIPAA**: Not HIPAA-compliant (no BAA with Google/GitHub/Vercel)
+- **SOC 2**: All three services are SOC 2 Type II certified
 
 ---
 
-## Testing Instructions
-
-### 1. Clone and Setup
-```bash
-# Clone repository
-git clone https://github.com/autonomy/mcp-demo.git
-cd mcp-demo
-
-# Install dependencies
-npm install
-
-# Copy environment variables
-cp .env.example .env.local
-
-# Start development server
-npm run dev
-
-# Open browser
-open http://localhost:3000
-```
-
-### 2. Test API Endpoints
-```bash
-# Health check
-curl http://localhost:3000/api/health | jq
-
-# Get mock users
-curl http://localhost:3000/api/data/users | jq
-
-# Get mock projects
-curl http://localhost:3000/api/data/projects | jq
-
-# Get mock metrics
-curl http://localhost:3000/api/data/metrics | jq
-```
-
-### 3. Test Vercel Deployment
-```bash
-# Login to Vercel (uses browser auth)
-vercel login
-
-# Deploy to preview
-vercel
-
-# Deploy to production
-vercel --prod
-
-# View deployment
-vercel open
-```
-
-### 4. Test MCP Integrations
-```bash
-# Example: Testing GitHub MCP server
-# (Requires MCP server configuration)
-claude mcp use github
-claude "Show me the contents of autonomy/mcp-demo"
-
-# Example: Testing Google Drive MCP server
-claude mcp use drive
-claude "List files in the MCP Demo folder"
-```
-
----
-
-## Security Notes
-
-1. **Public Access**: This sandbox is intentionally public for review purposes
-2. **No Secrets**: No real secrets or credentials are stored
-3. **Rate Limiting**: No rate limiting enabled (safe for testing)
-4. **CORS**: Permissive CORS for testing (do not replicate in production)
-5. **Authentication**: Mock authentication only, no real user verification
-
----
-
-## Support & Feedback
-
-### Issues
-Report issues or bugs:
-- GitHub: https://github.com/autonomy/mcp-demo/issues
-- Email: sandbox-support@auai.cloud
+## Support & Resources
 
 ### Documentation
-- Main README: https://github.com/autonomy/mcp-demo/README.md
-- API Docs: https://github.com/autonomy/mcp-demo/docs/API.md
+- GitHub API: https://docs.github.com/en/rest
+- Vercel API: https://vercel.com/docs/rest-api
+- Google Drive API: https://developers.google.com/drive/api/v3/reference
 
-### Contact
-For questions about this sandbox:
-- Technical Lead: demo-team@auai.cloud
-- Anthropic Reviewers: Use internal channels
-
----
-
-## Version History
-
-- **v0.1.0** (2025-10-28): Initial sandbox setup
-  - Basic Next.js app
-  - Mock data endpoints
-  - GitHub repository structure
-  - Vercel deployment configuration
-  - Documentation
+### Getting Help
+- **GitHub Issues**: https://github.com/Bmathews721/autonomy/issues
+- **Email**: support@auai.cloud
+- **Slack**: #mcp-server (internal)
 
 ---
 
-Last Updated: 2025-10-28
+Last Updated: 2025-10-29

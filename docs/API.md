@@ -2,6 +2,16 @@
 
 Complete API reference for the MCP Demo Sandbox environment.
 
+## ⚠️ Important: Two Different APIs
+
+This document covers the **Next.js API endpoints** of the mcp-demo web application. These are mock data endpoints for testing the demo app itself.
+
+**For the MCP Server API** (GitHub, Vercel, Google Drive integrations), see:
+- **[mcp-autonomy/API_REFERENCE.md](../../mcp-autonomy/API_REFERENCE.md)** - MCP Server tool documentation
+- **[mcp-autonomy/USER_GUIDE.md](../../mcp-autonomy/USER_GUIDE.md)** - MCP Server setup guide
+
+---
+
 ## Base URL
 
 ```

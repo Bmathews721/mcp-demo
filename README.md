@@ -1,14 +1,14 @@
-# MCP Demo - Sandbox Credentials for Anthropic Reviewers
+# MCP Demo - Sandbox for Autonomy MCP Server
 
-This is a demo repository for testing MCP (Model Context Protocol) integrations. It provides sandbox credentials and mock data for Anthropic reviewers.
+This is a demo repository for testing the **Autonomy MCP Server** integrations with GitHub, Vercel, and Google Drive.
 
 ## Overview
 
 This demo includes:
 - Test GitHub repository (`Bmathews721/mcp-demo`)
-- Dummy Vercel project configuration
-- Mock data files simulating production data
-- Sample Next.js application for testing
+- Vercel project for deployment testing
+- Google Drive folder with sample documents
+- Sample Next.js application for testing the MCP server
 
 ## Quick Start
 
@@ -46,36 +46,51 @@ vercel deploy
 vercel --prod
 ```
 
-### 3. Mock Data
+### 3. Google Drive Test Data
 
-Located in `data/` directory:
-- `users.json` - Sample user data
-- `projects.json` - Sample project metadata
-- `metrics.json` - Sample analytics/metrics
-- `logs.json` - Sample application logs
+Located in Google Drive folder (ID: `1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3`):
+- `sample-report.pdf` - Sample PDF document
+- `metrics-dashboard.xlsx` - Sample Excel spreadsheet
+- `user-export.csv` - Sample CSV export
+- `api-logs.txt` - Sample text log file
+
+See [docs/GOOGLE_DRIVE_SETUP.md](docs/GOOGLE_DRIVE_SETUP.md) for setup instructions.
 
 ## Project Structure
 
 ```
 mcp-demo/
-├── README.md              # This file
-├── package.json           # Node dependencies
-├── vercel.json            # Vercel configuration
-├── .env.example           # Environment variables template
-├── app/                   # Next.js app directory
-│   ├── page.tsx           # Homepage
-│   ├── layout.tsx         # Root layout
-│   └── api/               # API routes
-│       ├── health/        # Health check endpoint
-│       └── data/          # Mock data endpoints
-├── data/                  # Mock data files
-│   ├── users.json
-│   ├── projects.json
-│   ├── metrics.json
-│   └── logs.json
-└── docs/                  # Documentation
-    ├── API.md             # API documentation
-    └── CREDENTIALS.md     # Sandbox credentials
+├── README.md                      # This file
+├── package.json                   # Node dependencies
+├── vercel.json                    # Vercel configuration
+├── .env.example                   # MCP credentials template
+├── app/                           # Next.js app directory
+│   ├── page.tsx                   # Homepage
+│   ├── layout.tsx                 # Root layout
+│   └── api/                       # API routes
+│       ├── health/                # Health check endpoint
+│       └── data/                  # Demo data endpoints
+└── docs/                          # MCP Server documentation
+    ├── API.md                     # Next.js API reference
+    ├── CREDENTIALS.md             # MCP credential setup guide
+    └── GOOGLE_DRIVE_SETUP.md      # Google Drive setup guide
+```
+
+For the **MCP Server** source code and documentation, see:
+```
+mcp-autonomy/
+├── src/                           # MCP server source code
+│   ├── index.ts                   # Server entry point
+│   ├── github.ts                  # GitHub integration
+│   ├── vercel.ts                  # Vercel integration
+│   └── drive.ts                   # Google Drive integration
+├── USER_GUIDE.md                  # End-user setup guide
+├── DEVELOPER_GUIDE.md             # Developer guide
+├── API_REFERENCE.md               # MCP tools documentation
+├── ARCHITECTURE.md                # System design
+├── TROUBLESHOOTING.md             # Common issues
+├── SECURITY.md                    # Security best practices
+└── ROADMAP.md                     # Future features
 ```
 
 ## API Endpoints
@@ -113,22 +128,22 @@ GET https://mcp-demo-pi.vercel.app/api/data/metrics
 
 ## Environment Variables
 
-Copy `.env.example` to `.env.local`:
+Copy `.env.example` to `.env.local` and configure MCP server credentials:
 
 ```bash
 # Application
 NEXT_PUBLIC_APP_NAME=MCP Demo
 NEXT_PUBLIC_APP_URL=https://mcp-demo-pi.vercel.app/
 
-# Mock Services (non-functional, for testing only)
-MOCK_API_KEY=demo_key_12345
-MOCK_DATABASE_URL=postgresql://demo:demo@localhost:5432/demo
-MOCK_REDIS_URL=redis://localhost:6379
-
-# Feature Flags
-ENABLE_MOCK_AUTH=true
-ENABLE_RATE_LIMITING=false
+# MCP Server Credentials (see docs/CREDENTIALS.md for setup)
+GITHUB_TOKEN=ghp_your_github_token_here
+VERCEL_API_TOKEN=your_vercel_token_here
+GOOGLE_SERVICE_ACCOUNT_EMAIL=your-service-account@project.iam.gserviceaccount.com
+GOOGLE_SERVICE_ACCOUNT_KEY_FILE=./path/to/service-account-key.json
+GOOGLE_DRIVE_FOLDER_ID=1OEc4_A-gckgYt49Q6eOvhNDKo4FZYC-3
 ```
+
+For detailed credential setup instructions, see **[docs/CREDENTIALS.md](docs/CREDENTIALS.md)**.
 
 ## Testing MCP Integrations
 
@@ -172,12 +187,13 @@ See `docs/CREDENTIALS.md` for full access details.
 
 ## Security Notes
 
-⚠️ **Important**: This is a SANDBOX environment only.
+⚠️ **Important**: This is a SANDBOX/DEMO environment.
 
-- All credentials are non-functional/mock values
-- No real user data or production systems
-- Safe for testing and demonstration
-- Do not use these patterns in production
+- Use your own API credentials (GitHub, Vercel, Google Drive)
+- All MCP tools are **read-only** - no write operations
+- No production data or systems
+- Safe for testing MCP integrations
+- See [docs/CREDENTIALS.md](docs/CREDENTIALS.md) for credential security best practices
 
 ## Support
 
